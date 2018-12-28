@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-class App extends Component {
+class TestForm extends Component {
   // initialize our state
   state = {
     data: [],
@@ -160,4 +160,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default TestForm;
