@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -33,7 +33,8 @@ const styles = theme => ({
     marginLeft: drawerWidth,
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`
-    }
+    },
+    zIndex: theme.zIndex.drawer + 1
   },
   menuButton: {
     marginRight: 20,
@@ -51,7 +52,7 @@ const styles = theme => ({
   }
 });
 
-class ResponsiveDrawer extends React.Component {
+class NavBar extends Component {
   state = {
     mobileOpen: false
   };
@@ -115,7 +116,6 @@ class ResponsiveDrawer extends React.Component {
             <Drawer
               container={this.props.container}
               variant="temporary"
-              anchor={theme.direction === "rtl" ? "right" : "left"}
               open={this.state.mobileOpen}
               onClose={this.handleDrawerToggle}
               classes={{
@@ -142,7 +142,7 @@ class ResponsiveDrawer extends React.Component {
   }
 }
 
-ResponsiveDrawer.propTypes = {
+NavBar.propTypes = {
   classes: PropTypes.object.isRequired,
   // Injected by the documentation to work in an iframe.
   // You won't need it on your project.
@@ -150,4 +150,4 @@ ResponsiveDrawer.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(ResponsiveDrawer);
+export default withStyles(styles, { withTheme: true })(NavBar);
