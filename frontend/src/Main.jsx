@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import { Paper, Typography } from "@material-ui/core";
 
-class Content extends Component {
+class Main extends Component {
   render() {
     return (
       <main>
         <Paper>
-          <Typography>Howdy</Typography>
+          <Typography>
+            <button onClick={this.simpleAction}>Test redux action</button>
+          </Typography>
         </Paper>
       </main>
     );
   }
 }
 
-export default Content;
+export default Main;

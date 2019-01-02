@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
-import NavBar from "./NavBar";
-import Content from "./Content";
+import Header from "./Header";
+import Main from "./Main";
 import { connect } from "react-redux";
 import { simpleAction } from "./actions/simpleAction";
 
@@ -11,9 +11,8 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <NavBar />
-        <button onClick={this.simpleAction}>Test redux action</button>
-        <Content />
+        <Header />
+        <Main />
       </Fragment>
     );
   }

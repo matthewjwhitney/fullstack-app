@@ -52,7 +52,7 @@ const styles = theme => ({
   }
 });
 
-class NavBar extends Component {
+class Header extends Component {
   state = {
     mobileOpen: false
   };
@@ -142,7 +142,7 @@ class NavBar extends Component {
   }
 }
 
-NavBar.propTypes = {
+Header.propTypes = {
   classes: PropTypes.object.isRequired,
   // Injected by the documentation to work in an iframe.
   // You won't need it on your project.
@@ -150,4 +150,4 @@ NavBar.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(NavBar);
+export default withStyles(styles, { withTheme: true })(Header);
