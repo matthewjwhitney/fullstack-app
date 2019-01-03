@@ -30,10 +30,6 @@ const styles = theme => ({
     }
   },
   appBar: {
-    marginLeft: drawerWidth,
-    [theme.breakpoints.up("sm")]: {
-      width: `calc(100% - ${drawerWidth}px)`
-    },
     zIndex: theme.zIndex.drawer + 1
   },
   menuButton: {
@@ -64,7 +60,7 @@ class Header extends Component {
   render() {
     const { classes } = this.props;
 
-    const drawer = (
+    const drawerContents = (
       <div>
         <div className={classes.toolbar} />
         <Divider />
@@ -106,7 +102,7 @@ class Header extends Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-              AppBar with Responsive Drawer
+              Header
             </Typography>
           </Toolbar>
         </AppBar>
@@ -122,7 +118,7 @@ class Header extends Component {
                 paper: classes.drawerPaper
               }}
             >
-              {drawer}
+              {drawerContents}
             </Drawer>
           </Hidden>
           <Hidden xsDown implementation="css">
@@ -133,7 +129,7 @@ class Header extends Component {
               variant="permanent"
               open
             >
-              {drawer}
+              {drawerContents}
             </Drawer>
           </Hidden>
         </nav>
