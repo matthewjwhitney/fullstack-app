@@ -177,4 +177,4 @@ TestForm.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(TestForm);
+export default withStyles(styles, { withTheme: true })(TestForm);
