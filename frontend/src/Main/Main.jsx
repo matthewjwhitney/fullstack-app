@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import TestForm from "./TestForm";
+import MongoForm from "./MongoForm";
 
 const styles = theme => ({
   appBarSpacer: theme.mixins.toolbar,
@@ -20,7 +20,7 @@ class Main extends Component {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Switch>
-          <Route exact path="/" component={TestForm} />
+          <Route exact path="/" component={MongoForm} />
           {/* <Route path="/Example" component={Example} /> */}
         </Switch>
       </main>
