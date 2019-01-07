@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import MongoForm from "./MongoForm";
+import Todos from "./Todos";
 
 const styles = theme => ({
   appBarSpacer: theme.mixins.toolbar,
@@ -21,7 +22,7 @@ class Main extends Component {
         <div className={classes.appBarSpacer} />
         <Switch>
           <Route exact path="/" component={MongoForm} />
-          {/* <Route path="/Example" component={Example} /> */}
+          <Route exact path="/Todos" component={Todos} />
         </Switch>
       </main>
     );
