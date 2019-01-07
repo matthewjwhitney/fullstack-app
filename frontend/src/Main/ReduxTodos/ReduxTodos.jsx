@@ -3,7 +3,7 @@ import Footer from "./Footer";
 import AddTodo from "./AddTodo";
 import VisibleTodoList from "./VisibleTodoList";
 
-const Todos = () => (
+const ReduxTodos = () => (
   <div>
     <AddTodo />
     <VisibleTodoList />
@@ -11,4 +11,4 @@ const Todos = () => (
   </div>
 );
 
-export default Todos;
+export default ReduxTodos;
