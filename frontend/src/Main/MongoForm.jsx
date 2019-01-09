@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import { TextField, Button, Paper } from "@material-ui/core";
+import SimpleTabs from "./SimpleTabs";
 
 const styles = theme => ({
   paper: {
@@ -137,6 +138,8 @@ class MongoForm extends Component {
     const { classes } = this.props;
     return (
       <Fragment>
+        <SimpleTabs />
+
         <Paper className={this.props.paper} elevation={1}>
           <ul>
             {data.length <= 0
