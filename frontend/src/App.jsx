@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import Header from "./Header";
-import Main from "./Main";
+import Header from "./Header/Header";
+import Main from "./Main/Main";
+import Menu from "./Menu/Menu";
 import { CssBaseline } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -15,11 +16,13 @@ class App extends Component {
     const { classes } = this.props;
 
     return (
-      <div className={classes.root}>
-        <CssBaseline />
-        <Header />
-        <Main />
-      </div>
+      <CssBaseline>
+        <div className={classes.root}>
+          <Header />
+          <Menu />
+          <Main />
+        </div>
+      </CssBaseline>
     );
   }
 }

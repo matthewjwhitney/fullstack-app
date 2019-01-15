@@ -21,7 +21,7 @@ class Main extends Component {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Switch>
-          <Route exact path="/" component={MongoForm} />
+          <Route exact path="/MongoForm" component={MongoForm} />
           <Route exact path="/ReduxTodos" component={ReduxTodos} />
         </Switch>
       </main>
