@@ -2,8 +2,15 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import axios from "axios";
-import { TextField, Button, Paper } from "@material-ui/core";
-import SimpleTabs from "./SimpleTabs";
+import {
+  TextField,
+  Button,
+  Paper,
+  List,
+  ListItem,
+  Divider,
+  ListItemText
+} from "@material-ui/core";
 
 const styles = theme => ({
   paper: {
@@ -52,10 +59,7 @@ class MongoForm extends Component {
     objectToUpdate: null
   };
 
-  // when component mounts, first thing it does is fetch all existing data in the db
-  // then we incorporate a polling logic so that we can easily see if the db has
-  // changed and implement those changes into the UI
-  componentDidMount() {
+  componentWillMount() {
     this.getDataFromDb();
     if (!this.state.intervalIsSet) {
       let interval = setInterval(this.getDataFromDb, 1000);
@@ -63,8 +67,6 @@ class MongoForm extends Component {
     }
   }
 
-  // never let a process live forever
-  // always kill a process everytime we are done using it
   componentWillUnmount() {
     if (this.state.intervalIsSet) {
       clearInterval(this.state.intervalIsSet);
@@ -72,21 +74,12 @@ class MongoForm extends Component {
     }
   }
 
-  // just a note, here, in the front end, we use the id key of the data object
-  // in order to identify which we want to Update or delete.
-  // for the back end, we use the object id assigned by MongoDB to modify
-  // data base entries
-
-  // the first get method that uses the backend api to
-  // fetch data from the data base
   getDataFromDb = () => {
     fetch("/api/getData")
       .then(data => data.json())
       .then(res => this.setState({ data: res.data }));
   };
 
-  // the put method that uses the backend api
-  // to create new query into the data base
   putDataToDB = message => {
     let currentIds = this.state.data.map(data => data.id);
     let idToBeAdded = 0;
@@ -100,8 +93,6 @@ class MongoForm extends Component {
     });
   };
 
-  // the delete method that uses the backend api
-  // to remove existing database information
   deleteFromDB = idTodelete => {
     let objIdToDelete = null;
     this.state.data.forEach(dat => {
@@ -117,8 +108,6 @@ class MongoForm extends Component {
     });
   };
 
-  // the update method that uses the backend api
-  // to overwrite existing data base information
   updateDB = (idToUpdate, updateToApply) => {
     let objIdToUpdate = null;
     this.state.data.forEach(dat => {
@@ -138,20 +127,26 @@ class MongoForm extends Component {
     const { classes } = this.props;
     return (
       <Fragment>
-        <SimpleTabs />
-
         <Paper className={this.props.paper} elevation={1}>
-          <ul>
-            {data.length <= 0
-              ? "NO DB ENTRIES YET"
-              : data.map(dat => (
-                  <li style={{ padding: "10px" }} key={data.message}>
-                    <span style={{ color: "gray" }}> id: </span> {dat.id} <br />
-                    <span style={{ color: "gray" }}> data: </span>
-                    {dat.message}
-                  </li>
-                ))}
-          </ul>
+          <List>
+            {data.length <= 0 ? (
+              <ListItem>
+                <ListItemText>No Database Entries Yet</ListItemText>
+              </ListItem>
+            ) : (
+              data.map(dat => (
+                <Fragment>
+                  <ListItem key={data.message}>
+                    <ListItemText primary={`id: ${dat.id}`} />
+                  </ListItem>
+                  <ListItem key={data.message}>
+                    <ListItemText primary={`data: ${dat.message}`} />
+                  </ListItem>
+                  <Divider />
+                </Fragment>
+              ))
+            )}
+          </List>
           <form className={classes.container} noValidate autoComplete="off">
             <TextField
               type="text"

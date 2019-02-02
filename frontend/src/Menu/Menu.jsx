@@ -1,63 +1,68 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import classNames from "classnames";
+
 import Drawer from "@material-ui/core/Drawer";
-import Hidden from "@material-ui/core/Hidden";
 import { withStyles } from "@material-ui/core/styles";
+
 import MenuList from "./MenuList";
 
-const drawerWidth = 240;
+const drawerWidth = 184;
 
 const styles = theme => ({
-  drawer: {
-    [theme.breakpoints.up("sm")]: {
-      width: drawerWidth,
-      flexShrink: 0
-    }
+  appBarSpacer: {
+    minHeight: 48
   },
-  drawerPaper: {
-    width: drawerWidth
+  drawer: {
+    width: drawerWidth,
+    whiteSpace: "nowrap"
+  },
+  drawerClose: {
+    width: 48,
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    overflowX: "hidden"
+  },
+  drawerOpen: {
+    width: drawerWidth,
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen
+    }),
+    overflowY: "auto"
+  },
+  paper: {
+    boxShadow:
+      " 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
+    border: "none"
   }
 });
 
 class Menu extends Component {
-  state = {
-    mobileOpen: false
-  };
-
-  handleDrawerToggle = () => {
-    this.setState(state => ({ mobileOpen: !state.mobileOpen }));
-  };
-
   render() {
-    const { classes, theme } = this.props;
+    const { classes } = this.props;
 
     return (
-      <nav className={classes.drawer}>
-        <Hidden smUp implementation="js">
-          <Drawer
-            container={this.props.container}
-            variant="temporary"
-            open={this.state.mobileOpen}
-            onClose={this.handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper
-            }}
-          >
-            <MenuList />
-          </Drawer>
-        </Hidden>
-        <Hidden xsDown implementation="js">
-          <Drawer
-            classes={{
-              paper: classes.drawerPaper
-            }}
-            variant="permanent"
-            open
-          >
-            <MenuList />
-          </Drawer>
-        </Hidden>
-      </nav>
+      <Drawer
+        variant="permanent"
+        className={classNames(classes.drawer, {
+          [classes.drawerOpen]: this.props.preferences.expandedMenu,
+          [classes.drawerClose]: !this.props.preferences.expandedMenu
+        })}
+        classes={{
+          paper: classNames(classes.paper, {
+            [classes.drawerOpen]: this.props.preferences.expandedMenu,
+            [classes.drawerClose]: !this.props.preferences.expandedMenu
+          })
+        }}
+        open={this.props.preferences.expandedMenu}
+      >
+        <div className={classes.appBarSpacer} />
+        <MenuList {...this.props} />
+      </Drawer>
     );
   }
 }
@@ -68,4 +73,6 @@ Menu.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(Menu);
+export default connect(({ preferences }) => ({ preferences }))(
+  withStyles(styles, { withTheme: true })(Menu)
+);

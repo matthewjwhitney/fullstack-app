@@ -1,17 +1,25 @@
 import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
-import StorageIcon from "@material-ui/icons/Storage";
+import classNames from "classnames";
+
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import { withStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
-import Divider from "@material-ui/core/Divider";
+import { Icon } from "@material-ui/core";
+import { toggleExpandedMenu } from "../actions/preferences";
 
 const styles = theme => ({
-  appBarSpacer: theme.mixins.toolbar
+  icon: {
+    textAlign: "center",
+    marginLeft: 11
+  },
+  listItemText: {
+    paddingLeft: 0
+  }
 });
 
 class MenuList extends Component {
@@ -20,20 +28,74 @@ class MenuList extends Component {
 
     return (
       <Fragment>
-        <div className={classes.appBarSpacer} />
-        <Divider />
-        <List>
-          <ListItem button component={Link} exact to="/MongoForm">
-            <ListItemIcon>
-              <StorageIcon />
-            </ListItemIcon>
-            <ListItemText primary={"MongoDB Form"} />
+        <List disablePadding>
+          <ListItem
+            button
+            disableGutters
+            divider
+            onClick={() => {
+              this.props.onToggleExpandedMenu();
+            }}
+          >
+            {this.props.preferences.expandedMenu ? (
+              <Fragment>
+                <ListItemIcon>
+                  <Icon
+                    className={classNames(
+                      classes.icon,
+                      `fa fa-angle-double-left`
+                    )}
+                  />
+                </ListItemIcon>
+                <ListItemText
+                  className={classes.listItemText}
+                  primary={"Collapse Menu"}
+                />
+              </Fragment>
+            ) : (
+              <ListItemIcon>
+                <Icon
+                  className={classNames(
+                    classes.icon,
+                    `fa fa-angle-double-right`
+                  )}
+                />
+              </ListItemIcon>
+            )}
           </ListItem>
-          <ListItem button component={Link} exact to="/ReduxTodos">
+          <ListItem
+            button
+            disableGutters
+            component={NavLink}
+            exact
+            to="/MongoForm"
+            divider
+          >
             <ListItemIcon>
-              <CheckCircleOutlineIcon />
+              <Icon className={classNames(classes.icon, `fas fa-database`)} />
             </ListItemIcon>
-            <ListItemText primary={"Redux Todos"} />
+            <ListItemText
+              className={classes.listItemText}
+              primary={"MongoDB Form"}
+            />
+          </ListItem>
+          <ListItem
+            disableGutters
+            button
+            component={NavLink}
+            exact
+            to="/ReduxTodos"
+            divider
+          >
+            <ListItemIcon>
+              <Icon
+                className={classNames(classes.icon, `fas fa-clipboard-list`)}
+              />
+            </ListItemIcon>
+            <ListItemText
+              className={classes.listItemText}
+              primary={"Redux Todos"}
+            />
           </ListItem>
         </List>
       </Fragment>
@@ -46,4 +108,13 @@ MenuList.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(MenuList);
+const mapDispatchToProps = dispatch => ({
+  onToggleExpandedMenu: () => {
+    dispatch(toggleExpandedMenu());
+  }
+});
+
+export default connect(
+  ({ preferences }) => ({ preferences }),
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(MenuList));

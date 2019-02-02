@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Switch, Route } from "react-router-dom";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -6,10 +6,12 @@ import MongoForm from "./MongoForm";
 import ReduxTodos from "./ReduxTodos";
 
 const styles = theme => ({
-  appBarSpacer: theme.mixins.toolbar,
+  appBarSpacer: {
+    height: 48
+  },
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing.unit,
     height: "100vh",
     overflow: "auto"
   }
