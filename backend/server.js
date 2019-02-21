@@ -10,7 +10,7 @@ const router = express.Router();
 
 // this is the MongoDB database
 const dbRoute =
-  "mongodb://matthewjwhitney:Beauty5764$@ds143683.mlab.com:43683/mjw-test";
+  "mongodb://fullstack-app:Tx8haYz6bHaSuGK@ds145895.mlab.com:45895/fullstack-app";
 
 // connects the back end code with the database
 mongoose.connect(
